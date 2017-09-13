@@ -4,6 +4,6 @@
   <title>@yield('title' ,'Sample')-Laravel 入门教程</title>
 </head>
 <body>
-	@yield('content');
+	@yield('content')
 </body>
 </html>
