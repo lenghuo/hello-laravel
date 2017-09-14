@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\User;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -24,7 +25,7 @@ class UsersController extends Controller
     	$this->validate($requset,[
     		'name' => 'required|max:50',
     		'email' => 'required|email|unique:users|max:255',
-    		'password' => 'required'
+    		'password' => 'required|confirmed|min:6',
     	]);
 
         $user = User::create([
@@ -33,6 +34,7 @@ class UsersController extends Controller
             'password' => bcrypt($requset->password),
         ]);
 
+        Auth::login($user);
         session()->flash('success','欢迎，您将在这开始一段新的旅程');
 
     	return redirect()->route('users.show',[$user]);
